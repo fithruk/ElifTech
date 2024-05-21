@@ -16,8 +16,11 @@ class EvensService {
         whereDidFound,
         id
       );
-      tergetEvent.participantsIds.push(candidate._id);
-      await tergetEvent.save();
+      if (!tergetEvent.participantsIds.includes(candidate._id)) {
+        tergetEvent.participantsIds.push(candidate._id);
+        await tergetEvent.save();
+      }
+
       return { msg };
     } catch (error) {
       return error.message;
@@ -30,7 +33,7 @@ class EvensService {
         .findById(id)
         .populate("participantsIds");
 
-      return targetEvent.participantsIds;
+      return { title: targetEvent.title, guests: targetEvent.participantsIds };
     } catch (error) {
       return error.message;
     }

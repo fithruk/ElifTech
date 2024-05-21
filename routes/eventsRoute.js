@@ -15,7 +15,8 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const id = req.params.id;
+    let id = req.params.id;
+    id = id.substring(1, id.length);
     const guests = await evensService.getEvenstGuests(id);
     res.status(200).json(guests);
   } catch (error) {
@@ -25,8 +26,10 @@ router.get("/:id", async (req, res) => {
 
 router.post("/:id", registerMiddleWare, async (req, res) => {
   try {
-    const id = req.params.id;
+    let id = req.params.id;
+    id = id.substring(1, id.length);
     const resp = await evensService.addNewUserToEvent({ ...req.body, id });
+
     res.status(200).json(resp);
   } catch (error) {
     console.log(error.message);

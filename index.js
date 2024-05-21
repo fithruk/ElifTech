@@ -15,7 +15,7 @@ app.use(
     origin: "*",
     credentials: true,
 
-    methods: ["GET", "POST", "DELETE"],
+    methods: ["GET", "POST"],
   })
 );
 

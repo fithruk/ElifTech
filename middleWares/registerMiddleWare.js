@@ -7,6 +7,7 @@ function validateEmail(email) {
 const registerMiddleWare = async (req, res, next) => {
   const errors = [];
   const { fullName, email, dateOfBirth, whereDidFound } = req.body;
+
   if (
     typeof fullName !== "string" ||
     typeof email !== "string" ||
@@ -23,13 +24,14 @@ const registerMiddleWare = async (req, res, next) => {
   if (fullName.split(" ").length < 2) {
     errors.push({ msg: "for proceed you need to in full name" });
   }
-  if (!dateOfBirth || dateOfBirth.split("/").length < 3) {
+  if (!dateOfBirth) {
     errors.push({ msg: "date of birth has invalid format" });
   }
 
   if (errors.length === 0) {
-    await next();
+    next();
   } else {
+    console.log(errors);
     await res.json(errors);
   }
 };
